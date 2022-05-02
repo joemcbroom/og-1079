@@ -13,10 +13,10 @@ onMounted(() => {
     console.log(
       'arrived on callback page with an existing user, so going home'
     );
+    user.value.id = supabase.auth.user().id;
     setTimeout(() => {
-      user.value.id = supabase.auth.user().id;
       router.push('/profile');
-    }, 0);
+    }, 10);
   }
 });
 </script>
