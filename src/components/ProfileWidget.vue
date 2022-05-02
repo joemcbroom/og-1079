@@ -93,7 +93,6 @@ onMounted(() => {
   <form
     class="flex flex-col justify-center items-start gap-5 border p-6 w-full"
     @submit.prevent
-    v-show="user?.value?.id"
   >
     <label class="w-full">
       <span class="text-lg">Email</span>
