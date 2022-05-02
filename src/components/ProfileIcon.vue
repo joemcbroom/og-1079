@@ -3,6 +3,9 @@ import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import DefaultButton from '@/components/DefaultButton.vue';
 import useUserStore from '../stores/user';
+import { useAuthStore } from '../stores/auth';
+
+const { supabase } = useAuthStore();
 
 const userStore = useUserStore();
 
@@ -23,7 +26,7 @@ const toggleShowOptions = () => {
       class="flex flex-col min-w-max border shadow-lg rounded absolute top-full right-0 bg-zinc-100 mt-2 py-5 px-10"
       v-show="showOptions"
     >
-      <DefaultButton @click="toggleShowOptions" v-if="!userStore.id">
+      <DefaultButton @click="toggleShowOptions" v-if="!supabase.auth.user()">
         <router-link to="/auth">Sign In</router-link>
       </DefaultButton>
 
