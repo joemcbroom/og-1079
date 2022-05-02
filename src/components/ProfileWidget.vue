@@ -90,8 +90,9 @@ onMounted(() => {
 });
 </script>
 <template>
+  <h1 class="text-center text-3xl">Update Profile Info</h1>
   <form
-    class="flex flex-col justify-center items-start gap-5 border p-6 w-full"
+    class="flex flex-col justify-center items-start gap-5 border p-6 w-full mt-4"
     @submit.prevent
   >
     <label class="w-full">

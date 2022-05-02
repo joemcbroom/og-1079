@@ -14,7 +14,7 @@ const handleLogin = async () => {
     loading.value = true;
     const { error } = await supabase.auth.signIn(
       { email: email.value },
-      { redirecTo: '/callback' }
+      { redirectTo: '/callback' }
     );
     if (error) throw error;
   } catch (error) {
