@@ -3,6 +3,6 @@ import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
-    return { supabase, isAuthenticated: false };
+    return { supabase };
   },
 });

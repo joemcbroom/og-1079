@@ -1,14 +1,10 @@
 <script setup>
-import useUserStore from '@/stores/user';
 import { useAuthStore } from '@/stores/auth';
-import { storeToRefs } from 'pinia';
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import DefaultButton from './DefaultButton.vue';
 import router from '../router';
 
 const loading = ref(false);
-const userStore = useUserStore();
-const { user } = storeToRefs(userStore);
 const { supabase } = useAuthStore();
 
 const username = ref('');
@@ -19,11 +15,11 @@ const phone = ref('');
 const getProfile = async () => {
   try {
     loading.value = true;
-
+    const { id } = supabase.auth.user();
     let { data, error, status } = await supabase
       .from('profiles')
       .select('username, description, avatar_url, phone, isAdmin')
-      .eq('id', user.value.id)
+      .eq('id', id)
       .single();
 
     if (error && status !== 406) throw error;
@@ -44,9 +40,9 @@ const getProfile = async () => {
 const updateProfile = async () => {
   try {
     loading.value = true;
-
+    const { id } = supabase.auth.user();
     const updates = {
-      id: user.value.id,
+      id,
       username: username.value,
       description: description.value,
       avatar_url: avatar_url.value,
@@ -54,13 +50,7 @@ const updateProfile = async () => {
       updated_at: new Date(),
     };
 
-    let {
-      data: [response],
-      error,
-    } = await supabase.from('profiles').upsert(updates);
-    if (response) {
-      user.value = { response, ...user.value };
-    }
+    let { error } = await supabase.from('profiles').upsert(updates);
 
     if (error) throw error;
   } catch (error) {
@@ -75,7 +65,6 @@ const signOut = async () => {
     loading.value = true;
     let { error } = await supabase.auth.signOut();
     if (error) throw error;
-    userStore.$reset();
     router.push('/auth');
   } catch (error) {
     alert(error.message);

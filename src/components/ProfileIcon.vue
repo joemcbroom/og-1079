@@ -2,12 +2,9 @@
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import DefaultButton from '@/components/DefaultButton.vue';
-import useUserStore from '../stores/user';
 import { useAuthStore } from '../stores/auth';
 
 const { supabase } = useAuthStore();
-
-const userStore = useUserStore();
 
 const showOptions = ref(false);
 const toggleShowOptions = () => {

@@ -1,6 +1,14 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import ProfileIcon from './ProfileIcon.vue';
+import { useAuthStore } from '@/stores/auth';
+import { computed } from '@vue/reactivity';
+
+const { supabase } = useAuthStore();
+
+const isAuthenticated = computed(() => {
+  return supabase.auth.user();
+});
 </script>
 <template>
   <header
@@ -12,7 +20,7 @@ import ProfileIcon from './ProfileIcon.vue';
     <div class="flex justify-center items-center gap-4">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/events">Events</RouterLink>
-      <RouterLink to="/chat">Chat</RouterLink>
+      <RouterLink v-if="isAuthenticated" to="/chat">Chat</RouterLink>
     </div>
     <div class="w-24 grid place-items-center">
       <ProfileIcon />
