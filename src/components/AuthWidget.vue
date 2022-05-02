@@ -12,7 +12,10 @@ const { supabase } = useAuthStore();
 const handleLogin = async () => {
   try {
     loading.value = true;
-    const { error } = await supabase.auth.signIn({ email: email.value });
+    const { error } = await supabase.auth.signIn(
+      { email: email.value },
+      { redirecTo: '/callback' }
+    );
     if (error) throw error;
   } catch (error) {
     console.error(error);
