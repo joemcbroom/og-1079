@@ -101,7 +101,7 @@ onMounted(() => {
         class="bg-zinc-800 text-zinc-400 w-full border-0 pt-2"
         id="email"
         type="text"
-        :value="userStore.user.email"
+        :value="supabase.auth.user().email"
         disabled
       />
     </label>
