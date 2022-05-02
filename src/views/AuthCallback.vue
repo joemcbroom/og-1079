@@ -13,7 +13,10 @@ onMounted(() => {
     console.log(
       'arrived on callback page with an existing user, so going home'
     );
-    user.value.id = supabase.auth.user().id;
+    userStore.$patch({
+      id: supabase.auth.user().id,
+      isAuthenticated: true,
+    });
     setTimeout(() => {
       router.push('/profile');
     }, 10);
