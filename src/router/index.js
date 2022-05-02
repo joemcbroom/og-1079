@@ -51,7 +51,7 @@ const router = createRouter({
             'token_type',
           ].some((key) => !(key in hashDictionary))
         )
-          return '/';
+          return '/profile';
       },
     },
     {
