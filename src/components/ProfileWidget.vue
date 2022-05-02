@@ -85,7 +85,7 @@ const signOut = async () => {
 };
 
 onMounted(() => {
-  if (supabase.auth.user()) return router.push('/auth');
+  if (!supabase.auth.user()) return router.push('/auth');
   getProfile();
 });
 </script>
