@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 </script>
 <template>
   <header
-    class="flex w-full justify-between p-4 border-0 border-b sticky top-0 bg-zinc-100 text-zinc-800"
+    class="flex w-full justify-between p-4 border-0 border-b sticky top-0 bg-zinc-100 text-zinc-800 z-50"
   >
     <div class="w-24 grid place-items-center">
       <img class="" src="../assets/logo.png" alt="logo" />

@@ -15,10 +15,6 @@ const updateProfile = async (newAvatarUrl) => {
   try {
     loading.value = true;
     const { id } = supabase.auth.user();
-    if (newAvatarUrl) {
-      userStore.user.avatar_url = newAvatarUrl;
-      await userStore.setUser(supabase);
-    }
     const updates = {
       id,
       ...userStore.user,
@@ -56,10 +52,6 @@ const updateAvatar = async (avatar_url) => {
     loading.value = false;
   }
 };
-
-// onMounted(() => {
-//   if (!supabase.auth.user()) return router.push('/auth');
-// });
 </script>
 <template>
   <h1 class="text-center text-3xl">Update Profile Info</h1>
