@@ -33,15 +33,12 @@ const toggleShowOptions = () => {
 <template>
   <div class="w-1/2 grid place-items-center relative">
     <span
-      class="overflow-hidden w-full rounded-full border border-zinc-500 aspect-square grid place-items-center"
-    >
-      <img
-        class="cursor-pointer"
-        :src="imageSrc"
-        alt="profile"
-        @click="toggleShowOptions"
-      />
-    </span>
+      class="overflow-hidden w-full rounded-full border border-zinc-500 aspect-square grid place-items-center bg-cover bg-center bg-no-repeat"
+      :class="{ 'cursor-pointer': includeOptions }"
+      :style="`background-image: url(${imageSrc})`"
+      @click="toggleShowOptions"
+    />
+
     <div
       class="flex flex-col min-w-max border shadow-lg rounded absolute top-full right-0 bg-zinc-100 mt-2 py-5 px-10 z-20"
       v-show="includeOptions && showOptions"

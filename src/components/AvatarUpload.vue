@@ -41,11 +41,11 @@ const uploadAvatar = async (evt) => {
   <div
     class="flex flex-col justify-center items-center border border-zinc-100 rounded mt-4"
   >
-    <div class="w-full relative cursor-pointer">
+    <div class="w-full relative">
       <ProfileIcon class="rounded-full w-24 h-24 m-5" :includeOptions="false" />
       <label
         for="single"
-        class="absolute cursor-pointer bottom-0 right-0 text-lg border w-6 h-6 grid place-items-center bg-zinc-100"
+        class="absolute cursor-pointer bottom-0 right-0 text-lg border w-7 h-7 grid place-items-center bg-zinc-100"
       >
         <img src="@/assets/add.png" />
       </label>
