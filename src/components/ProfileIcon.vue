@@ -1,21 +1,45 @@
 <script setup>
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
-import DefaultButton from '@/components/DefaultButton.vue';
 import { useAuthStore } from '../stores/auth';
+import { useUserStore } from '../stores/user';
+import ProfileImage from '@/assets/profile-user.png';
+import { ref, watch } from 'vue';
+import DefaultButton from '@/components/DefaultButton.vue';
 
 const { supabase } = useAuthStore();
+const userStore = useUserStore();
 
 const showOptions = ref(false);
+const imageSrc = ref(ProfileImage);
+
+watch(
+  () => userStore.profileImagePublicURL,
+  (newValue) => {
+    imageSrc.value = newValue;
+  },
+  { immediate: true }
+);
+
+const signOut = async () => {
+  try {
+    let { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  } catch (error) {
+    alert(error.message);
+  } finally {
+  }
+};
+
 const toggleShowOptions = () => {
   showOptions.value = !showOptions.value;
 };
 </script>
 <template>
-  <div class="w-3/4 grid place-items-center relative">
+  <div
+    class="w-1/2 aspect-square grid place-items-center relative rounded-full border border-zinc-500 p-2"
+  >
     <img
-      class="w-10 cursor-pointer"
-      src="../assets/profile-user.png"
+      class="w-full cursor-pointer"
+      :src="imageSrc"
       alt="profile"
       @click="toggleShowOptions"
     />
@@ -35,6 +59,9 @@ const toggleShowOptions = () => {
       >
         View Profile
       </router-link>
+      <default-button @click="signOut" v-if="supabase.auth.user()">
+        Sign Out
+      </default-button>
     </div>
   </div>
 </template>

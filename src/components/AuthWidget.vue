@@ -60,7 +60,9 @@ const handleLogin = async () => {
     v-else
   >
     <p class="text-base">Check your email for a sign in/up link</p>
-    <p @click="handleLogin">Didn't receive an email?</p>
-    <p class="text-ogGreen">Click here to try again</p>
+    <p>Didn't receive an email?</p>
+    <p @click="handleLogin" class="cursor-pointer text-ogGreen">
+      Click here to try again
+    </p>
   </div>
 </template>
