@@ -8,7 +8,7 @@ import HeaderBar from '@/components/HeaderBar.vue';
   <router-view v-slot="{ Component, route }">
     <transition :name="route.meta.transitionName || 'fade'">
       <main
-        class="max-w-sm h-full mx-auto flex flex-col justify-center items-center pt-4"
+        class="max-w-sm h-full mx-auto flex flex-col justify-center items-center pt-4 z-0"
         :key="route.path"
       >
         <component :is="Component" />

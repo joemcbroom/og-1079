@@ -1,52 +1,14 @@
-<script setup></script>
+<script setup>
+import AuthWidget from '@/components/AuthWidget.vue';
+import { useAuthStore } from '@/stores/auth';
 
+const { supabase } = useAuthStore();
+</script>
 <template>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
+  <h1 class="text-center text-3xl mb-4">OG 1079 Reunion</h1>
+  <h2 class="text-center text-2xl mb-4">Welcome to the site!</h2>
+  <p class="text-center text-lg">
+    We'll use this to organize OG 1079 Reunion events.
   </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque
-    quibusdam laudantium eius dignissimos inventore illum harum beatae est
-    alias? Itaque, fuga iure. Perspiciatis quae asperiores dolorum fugit
-    consectetur deleniti.
-  </p>
+  <AuthWidget v-if="!supabase.auth.user()" />
 </template>

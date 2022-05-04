@@ -31,19 +31,20 @@ const toggleShowOptions = () => {
 };
 </script>
 <template>
-  <div
-    class="w-1/2 aspect-square grid place-items-center relative rounded-full border border-zinc-500 p-2 overflow-hidden"
-  >
-    <img
-      class="w-full cursor-pointer"
-      :src="imageSrc"
-      alt="profile"
-      @click="toggleShowOptions"
-    />
+  <div class="w-1/2 grid place-items-center relative">
+    <span
+      class="overflow-hidden w-full rounded-full border border-zinc-500 aspect-square grid place-items-center"
+    >
+      <img
+        class="cursor-pointer"
+        :src="imageSrc"
+        alt="profile"
+        @click="toggleShowOptions"
+      />
+    </span>
     <div
-      class="flex flex-col min-w-max border shadow-lg rounded absolute top-full right-0 bg-zinc-100 mt-2 py-5 px-10"
-      v-show="showOptions"
-      v-if="includeOptions"
+      class="flex flex-col min-w-max border shadow-lg rounded absolute top-full right-0 bg-zinc-100 mt-2 py-5 px-10 z-20"
+      v-show="includeOptions && showOptions"
     >
       <DefaultButton @click="toggleShowOptions" v-if="!supabase.auth.user()">
         <router-link to="/auth">Sign In</router-link>
