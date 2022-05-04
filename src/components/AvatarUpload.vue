@@ -1,12 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
-import { useUserStore } from '@/stores/user';
 
 import ProfileIcon from './ProfileIcon.vue';
 
 const { supabase } = useAuthStore();
-const userStore = useUserStore();
 
 const uploading = ref(false);
 const files = ref();
@@ -43,8 +41,8 @@ const uploadAvatar = async (evt) => {
   <div
     class="flex flex-col justify-center items-center border border-zinc-100 rounded mt-4"
   >
-    <div class="w-full relative">
-      <ProfileIcon class="rounded-full w-24 h-24 m-5" />
+    <div class="w-full relative cursor-pointer">
+      <ProfileIcon class="rounded-full w-24 h-24 m-5" :includeOptions="false" />
       <label
         for="single"
         class="absolute cursor-pointer bottom-0 right-0 text-lg border w-6 h-6 grid place-items-center bg-zinc-100"

@@ -7,7 +7,7 @@ import StyledInput from './StyledInput.vue';
 import router from '../router';
 import AvatarUpload from './AvatarUpload.vue';
 const loading = ref(false);
-const { supabase } = useAuthStore();
+const { supabase, signOut } = useAuthStore();
 
 const userStore = useUserStore();
 
@@ -17,7 +17,7 @@ const updateProfile = async (newAvatarUrl) => {
     const { id } = supabase.auth.user();
     if (newAvatarUrl) {
       userStore.user.avatar_url = newAvatarUrl;
-      userStore.setUser(supabase);
+      await userStore.setUser(supabase);
     }
     const updates = {
       id,
@@ -34,21 +34,32 @@ const updateProfile = async (newAvatarUrl) => {
   }
 };
 
-const signOut = async () => {
+const updateAvatar = async (avatar_url) => {
   try {
     loading.value = true;
-    let { error } = await supabase.auth.signOut();
+    const { id } = supabase.auth.user();
+    const updates = {
+      id,
+      avatar_url,
+      updated_at: new Date(),
+    };
+
+    let { error } = await supabase.from('profiles').upsert(updates);
+    const { publicURL } = supabase.storage
+      .from('avatars')
+      .getPublicUrl(avatar_url);
+    userStore.profileImagePublicURL = publicURL;
     if (error) throw error;
   } catch (error) {
-    alert(error.message);
+    console.error(error);
   } finally {
     loading.value = false;
   }
 };
 
-onMounted(() => {
-  if (!supabase.auth.user()) return router.push('/auth');
-});
+// onMounted(() => {
+//   if (!supabase.auth.user()) return router.push('/auth');
+// });
 </script>
 <template>
   <h1 class="text-center text-3xl">Update Profile Info</h1>
@@ -57,7 +68,7 @@ onMounted(() => {
     class="flex flex-col justify-center items-start gap-5 border p-6 w-full mt-4"
     @submit.prevent
   >
-    <avatar-upload class="self-center" @upload="updateProfile" />
+    <avatar-upload class="self-center" @upload="updateAvatar" />
     <styled-input
       label="Email"
       id="email"
