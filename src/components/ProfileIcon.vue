@@ -32,7 +32,7 @@ const toggleShowOptions = () => {
 </script>
 <template>
   <div
-    class="w-1/2 aspect-square grid place-items-center relative rounded-full border border-zinc-500 p-2"
+    class="w-1/2 aspect-square grid place-items-center relative rounded-full border border-zinc-500 p-2 overflow-hidden"
   >
     <img
       class="w-full cursor-pointer"
