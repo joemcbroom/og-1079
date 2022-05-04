@@ -21,8 +21,6 @@ const updateProfile = async () => {
       updated_at: new Date(),
     };
 
-    debugger;
-
     let { error } = await supabase.from('profiles').upsert(updates);
     if (error) throw error;
   } catch (error) {
