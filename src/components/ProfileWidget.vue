@@ -11,10 +11,14 @@ const { supabase } = useAuthStore();
 
 const userStore = useUserStore();
 
-const updateProfile = async () => {
+const updateProfile = async (newAvatarUrl) => {
   try {
     loading.value = true;
     const { id } = supabase.auth.user();
+    if (newAvatarUrl) {
+      userStore.user.avatar_url = newAvatarUrl;
+      userStore.setUser(supabase);
+    }
     const updates = {
       id,
       ...userStore.user,

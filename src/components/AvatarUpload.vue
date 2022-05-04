@@ -1,13 +1,17 @@
 <script setup>
-import { ref, toRefs, watch } from 'vue';
+import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 
 import ProfileIcon from './ProfileIcon.vue';
 
 const { supabase } = useAuthStore();
+const userStore = useUserStore();
 
 const uploading = ref(false);
 const files = ref();
+
+const emit = defineEmits(['upload']);
 
 const uploadAvatar = async (evt) => {
   files.value = evt.target.files;
@@ -25,6 +29,7 @@ const uploadAvatar = async (evt) => {
     let { data, error: uploadError } = await supabase.storage
       .from('avatars')
       .upload(filePath, file);
+    emit('upload', filePath);
     if (uploadError) throw uploadError;
   } catch (error) {
     alert(error.message);
