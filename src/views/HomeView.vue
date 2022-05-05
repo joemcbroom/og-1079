@@ -1,5 +1,4 @@
 <script setup>
-import DefaultButton from '../components/DefaultButton.vue';
 import { useAuthStore } from '@/stores/auth';
 import { RouterLink } from 'vue-router';
 

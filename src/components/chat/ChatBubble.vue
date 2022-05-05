@@ -4,7 +4,6 @@ import { supabase } from '@/services/supabase';
 import { useChatUsersStore } from '@/stores/chatUsers';
 import Color from 'color';
 import gsap from 'gsap';
-import { onMounted, ref } from 'vue';
 
 const chatUserStore = useChatUsersStore();
 const { chatUser } = chatUserStore;

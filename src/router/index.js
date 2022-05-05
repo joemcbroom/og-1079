@@ -36,7 +36,7 @@ const router = createRouter({
       path: '/chat',
       name: 'chat',
       component: ChatView,
-      meta: { requiresAuth: false, includeInNav: true },
+      meta: { requiresAuth: true, includeInNav: true },
     },
     {
       path: '/auth',
@@ -63,7 +63,6 @@ const router = createRouter({
 });
 
 const { supabase } = authStore;
-const routes = router.getRoutes();
 supabase.auth.onAuthStateChange((event) => {
   if (event == 'SIGNED_OUT') {
     console.log('signed out');

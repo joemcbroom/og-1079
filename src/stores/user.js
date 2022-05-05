@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { useAuthStore } from '@/stores/auth.js';
 import { getPublicUrl } from '@/utils/publicUrl.js';
 
 export const useUserStore = defineStore('user', {

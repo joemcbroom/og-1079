@@ -27,7 +27,7 @@ const getChats = async () => {
 
 const getUserProfile = async (id) => {
   try {
-    const { data, error, status } = await supabase
+    const { data, error } = await supabase
       .from('profiles')
       .select('id, username, avatar_url')
       .eq('id', id)
@@ -45,7 +45,7 @@ const postChat = async (text) => {
     profile: supabase.auth.user().id,
   };
   try {
-    const { data, error, status } = await supabase.from('chats').insert([body]);
+    const { error } = await supabase.from('chats').insert([body]);
     if (error) throw error;
     return;
   } catch (error) {

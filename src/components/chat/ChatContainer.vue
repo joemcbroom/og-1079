@@ -4,7 +4,7 @@ import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
 import { postChat } from '@/services/supabase';
 import ChatBubble from './ChatBubble.vue';
 
-const props = defineProps({
+defineProps({
   chats: {
     type: Array,
     default: () => [],

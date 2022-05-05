@@ -1,17 +1,16 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
-import { onMounted, ref, watch } from 'vue';
+import { ref } from 'vue';
 import DefaultButton from './DefaultButton.vue';
 import StyledInput from './StyledInput.vue';
-import router from '../router';
 import AvatarUpload from './AvatarUpload.vue';
 const loading = ref(false);
 const { supabase, signOut } = useAuthStore();
 
 const userStore = useUserStore();
 
-const updateProfile = async (newAvatarUrl) => {
+const updateProfile = async () => {
   try {
     loading.value = true;
     const { id } = supabase.auth.user();

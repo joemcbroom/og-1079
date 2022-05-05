@@ -24,7 +24,7 @@ const uploadAvatar = async (evt) => {
     const fileName = `${Math.random()}.${fileExt}`;
     const filePath = `${fileName}`;
 
-    let { data, error: uploadError } = await supabase.storage
+    let { error: uploadError } = await supabase.storage
       .from('avatars')
       .upload(filePath, file);
     emit('upload', filePath);
