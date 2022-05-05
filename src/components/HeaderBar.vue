@@ -1,8 +1,7 @@
 <script setup>
-import { RouterLink, useRouter } from 'vue-router';
+import { RouterLink } from 'vue-router';
 import ProfileIcon from './ProfileIcon.vue';
 import { useAuthStore } from '@/stores/auth';
-import { computed, onUpdated, watch } from 'vue';
 const authStore = useAuthStore();
 </script>
 <template>
@@ -15,7 +14,7 @@ const authStore = useAuthStore();
     <div class="flex justify-center items-center gap-4">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/events">Events</RouterLink>
-      <RouterLink v-if="authStore.isAuthenticated" to="/chat">Chat</RouterLink>
+      <RouterLink v-if="true" to="/chat">Chat</RouterLink>
     </div>
     <div class="w-24 grid place-items-center">
       <ProfileIcon :includeOptions="true" />

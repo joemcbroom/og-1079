@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { useAuthStore } from '@/stores/auth.js';
+import { getPublicUrl } from '@/utils/publicUrl.js';
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -10,7 +12,6 @@ export const useUserStore = defineStore('user', {
         phone: '',
         isAdmin: false,
       },
-      profileImagePublicURL: null,
     };
   },
   actions: {
@@ -25,17 +26,16 @@ export const useUserStore = defineStore('user', {
         if (error & (status !== 406)) throw error;
         if (data) {
           this.user = data;
-          const { avatar_url } = data;
-          if (avatar_url) {
-            const { publicURL } = supabase.storage
-              .from('avatars')
-              .getPublicUrl(avatar_url);
-            this.profileImagePublicURL = publicURL;
-          }
         }
       } catch (error) {
         console.error(error);
       }
+    },
+  },
+  getters: {
+    profileImagePublicURL() {
+      const { avatar_url } = this.user;
+      return getPublicUrl(avatar_url);
     },
   },
 });

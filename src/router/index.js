@@ -36,7 +36,7 @@ const router = createRouter({
       path: '/chat',
       name: 'chat',
       component: ChatView,
-      meta: { requiresAuth: true, includeInNav: true },
+      meta: { requiresAuth: false, includeInNav: true },
     },
     {
       path: '/auth',

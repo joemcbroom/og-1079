@@ -32,13 +32,9 @@ const handleLogin = async () => {
     v-if="!emailSent"
     @submit.prevent
   >
-    <h1 class="text-center text-3xl font-bold">Login</h1>
-    <p class="text-center text-lg">
-      Enter your email to login or create a new account
-    </p>
-    <p class="text-center text-lg">
-      You will recieve an email with a link to login
-    </p>
+    <h1 class="text-3xl font-bold">Login</h1>
+    <p class="text-lg">Enter your email to login or create a new account</p>
+    <p class="text-lg">You will recieve an email with a link to login</p>
 
     <div class="flex flex-nowrap w-3/4 mx-auto mt-6">
       <input

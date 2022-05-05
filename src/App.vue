@@ -8,7 +8,7 @@ import HeaderBar from '@/components/HeaderBar.vue';
   <router-view v-slot="{ Component, route }">
     <transition :name="route.meta.transitionName || 'fade'">
       <main
-        class="max-w-sm h-full mx-auto flex flex-col justify-center items-center pt-4 z-0"
+        class="max-w-sm h-full mx-auto flex flex-col justify-center items-center z-0"
         :key="route.path"
       >
         <component :is="Component" />
@@ -19,7 +19,7 @@ import HeaderBar from '@/components/HeaderBar.vue';
 
 <style>
 main {
-  min-height: calc(100vh - 79.5px);
+  min-height: calc(100vh - 81px);
 }
 .fade-enter-active,
 .fade-leave-active {
