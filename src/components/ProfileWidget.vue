@@ -86,10 +86,10 @@ const updateAvatar = async (avatar_url) => {
     </label>
 
     <div class="w-full flex gap-1">
-      <default-button class="w-full" :action="updateProfile">
+      <default-button class="w-full" @click="updateProfile">
         Update Profile
       </default-button>
-      <default-button class="w-full" :action="signOut">
+      <default-button class="w-full" @click="signOut">
         Sign Out
       </default-button>
     </div>

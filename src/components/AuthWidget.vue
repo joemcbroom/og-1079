@@ -45,7 +45,7 @@ const handleLogin = async () => {
       />
       <DefaultButton
         class="rounded-l-none w-1/2"
-        :action="handleLogin"
+        @click="handleLogin"
         text="Login"
         :disabled="loading"
       />

@@ -39,4 +39,18 @@ const getUserProfile = async (id) => {
   }
 };
 
-export { supabase, getChats, getUserProfile };
+const postChat = async (text) => {
+  const body = {
+    text,
+    profile: supabase.auth.user().id,
+  };
+  try {
+    const { data, error, status } = await supabase.from('chats').insert([body]);
+    if (error) throw error;
+    return;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { supabase, getChats, getUserProfile, postChat };
