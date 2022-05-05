@@ -6,8 +6,10 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const getChats = async () => {
   try {
-    let { data, error } = await supabase.from('chats').select(
-      `
+    let { data, error } = await supabase
+      .from('chats')
+      .select(
+        `
         id,
         text,
         profile (
@@ -16,7 +18,8 @@ const getChats = async () => {
             avatar_url
         )
       `
-    );
+      )
+      .order('created_at', 'desc');
 
     if (error) throw error;
     return data;
