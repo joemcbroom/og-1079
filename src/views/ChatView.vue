@@ -53,7 +53,7 @@ const handleNewChat = async (newChat) => {
   if (!chatUsers.value.find((user) => user?.id === profile.id)) {
     chatUsers.value.push(profile);
   }
-  chats.value.push(chat);
+  chats.value.push({ ...chat, isNew: true });
 };
 </script>
 <template>

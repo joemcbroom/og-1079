@@ -55,9 +55,10 @@ onUnmounted(() => {
         class="h-full bg-zinc-50 rounded border text-zinc-800 overflow-scroll flex flex-col py-4 gap-4 scroll-smooth"
       >
         <ChatBubble
-          v-for="chat in chats"
+          v-for="(chat, index) in chats"
           :chat="chat"
           :key="chat.id"
+          :index="index"
           class="text-xs"
         />
       </div>
