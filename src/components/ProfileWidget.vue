@@ -43,7 +43,7 @@ const updateAvatar = async (avatar_url) => {
     const { publicURL } = supabase.storage
       .from('avatars')
       .getPublicUrl(avatar_url);
-    userStore.profileImagePublicURL = publicURL;
+    userStore.user.avatar_url = avatar_url;
     if (error) throw error;
   } catch (error) {
     console.error(error);

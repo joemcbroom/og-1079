@@ -19,9 +19,9 @@ defineProps({
 });
 
 watch(
-  () => userStore.profileImagePublicURL,
+  () => userStore.user.avatar_url,
   (newValue) => {
-    imageSrc.value = newValue || ProfileImage;
+    imageSrc.value = userStore.profileImagePublicURL || ProfileImage;
   },
   { immediate: true }
 );

@@ -2,7 +2,7 @@
 import { supabase, getChats, getUserProfile } from '@/services/supabase';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import { getPublicUrl } from '@/utils/publicUrl';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useChatUsersStore } from '@/stores/chatUsers';
 import { storeToRefs } from 'pinia';
 
