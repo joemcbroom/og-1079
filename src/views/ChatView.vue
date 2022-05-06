@@ -2,7 +2,7 @@
 import { supabase, getChats, getUserProfile } from '@/services/supabase';
 import ChatContainer from '@/components/chat/ChatContainer.vue';
 import { getPublicUrl } from '@/utils/publicUrl';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useChatUsersStore } from '@/stores/chatUsers';
 import { storeToRefs } from 'pinia';
 
@@ -36,6 +36,13 @@ onMounted(async () => {
       }
       await handleNewChat(newChat);
     })
+    .on('UPDATE', async (payload) => {
+      const { errors, new: updatedChat } = payload;
+      if (errors) {
+        console.error(errors);
+      }
+      await handleUpdateChat(updatedChat);
+    })
     .subscribe();
 });
 
@@ -54,6 +61,18 @@ const handleNewChat = async (newChat) => {
     chatUsers.value.push(profile);
   }
   chats.value.push({ ...chat, isNew: true });
+};
+
+const handleUpdateChat = async ({ likes, id }) => {
+  const indexOfChat = chats.value.findIndex((chat) => chat.id === id);
+  const chatToUpdate = chats.value[indexOfChat];
+  if (indexOfChat === -1) {
+    return;
+  }
+  chats.value.splice(indexOfChat, 1, {
+    ...chatToUpdate,
+    likes,
+  });
 };
 </script>
 <template>

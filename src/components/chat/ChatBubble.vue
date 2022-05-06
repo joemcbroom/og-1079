@@ -1,9 +1,10 @@
 <script setup>
 import ProfileImage from '@/assets/profile-user.png';
-import { supabase } from '@/services/supabase';
+import { addOrRemoveLike } from '@/services/supabase';
 import { useChatUsersStore } from '@/stores/chatUsers';
 import Color from 'color';
 import gsap from 'gsap';
+import LikeIcon from './LikeIcon.vue';
 
 const chatUserStore = useChatUsersStore();
 const { chatUser } = chatUserStore;
@@ -16,13 +17,14 @@ const props = defineProps({
     type: Number,
     default: null,
   },
+  chatIsUser: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 });
 
 const DELAY_MODIFIER = props.chat.isNew ? 0 : props.index * 0.05;
-
-const chatIsUser = ({ profile: { id } }) => {
-  return id === supabase.auth.user().id;
-};
 
 const getAvatar = (chat) => {
   const src = chatUser(chat.profile.id)?.public_avatar_url;
@@ -44,7 +46,8 @@ function intToRGB(i) {
   return '00000'.substring(0, 6 - c.length) + c;
 }
 
-const randomColor = (id) => {
+const randomColor = (chat) => {
+  const id = chat.profile.id;
   const hex = `#${intToRGB(hashCode(id))}`;
   const color = Color(hex);
   return {
@@ -54,14 +57,14 @@ const randomColor = (id) => {
 };
 
 function onBeforeEnter(el) {
-  const elToAnimate = el.querySelector('.text');
+  const text = el.querySelector('.text');
   el.style.opacity = '0';
-  elToAnimate.style.transform = 'scaleX(0)';
+  text.style.transform = 'scaleX(0)';
 }
 
 function onEnter(el, done) {
-  const elToAnimate = el.querySelector('.text');
-  gsap.to(elToAnimate, {
+  const text = el.querySelector('.text');
+  gsap.to(text, {
     transform: 'scaleX(1)',
     delay: DELAY_MODIFIER,
     onComplete: done,
@@ -72,14 +75,6 @@ function onEnter(el, done) {
     onComplete: done,
   });
 }
-
-// function onLeave(el, done) {
-//   gsap.to(el, {
-//     transform: 'scaleX(0)',
-//     delay: DELAY_MODIFIER,
-//     onComplete: done,
-//   });
-// }
 </script>
 
 <template>
@@ -89,52 +84,39 @@ function onEnter(el, done) {
     @enter="onEnter"
     appear
   >
-    <div class="grid grid-cols-5" v-if="chatIsUser(chat)">
+    <div class="grid grid-cols-5">
       <div
-        class="flex flex-col justify-center items-center col-span-1 order-last"
+        class="flex flex-col justify-center items-center col-span-1"
+        :class="chatIsUser ? 'order-last' : 'order-first'"
       >
         <img
           class="rounded-full aspect-square object-cover w-8 h-8 border"
           :src="getAvatar(chat)"
         />
-        <span>Me</span>
-      </div>
-      <div
-        class="text origin-right col-span-4 flex justify-start items-center border w-10/12 ml-auto my-1 text-sm pl-4 rounded-lg rounded-br-none"
-        :style="{ backgroundColor: randomColor(chat.profile.id).hex }"
-      >
-        <span
-          :class="
-            randomColor(chat.profile.id).isDark
-              ? 'text-zinc-50'
-              : 'text-zinc-900'
-          "
-        >
-          {{ chat.text }}
+        <span>
+          {{ chatIsUser ? 'You' : chat.profile.username }}
         </span>
       </div>
-    </div>
-
-    <div class="grid grid-cols-5" v-else>
-      <div class="flex flex-col justify-center items-center col-span-1">
-        <img
-          class="rounded-full aspect-square object-cover w-8 h-8 border"
-          :src="getAvatar(chat)"
-        />
-        <span class="">{{ chat.profile.username }}</span>
-      </div>
       <div
-        class="text origin-left col-span-4 flex justify-start items-center border w-10/12 mr-auto my-1 text-sm pl-4 rounded-lg rounded-bl-none"
-        :style="{ backgroundColor: randomColor(chat.profile.id).hex }"
+        class="text col-span-4 flex justify-start items-center border w-10/12 my-1 text-sm pl-4 rounded-lg"
+        :class="
+          chatIsUser
+            ? 'origin-right ml-auto rounded-br-none'
+            : 'origin-left mr-auto rounded-bl-none'
+        "
+        :style="{ backgroundColor: randomColor(chat).hex }"
+        @dblclick="addOrRemoveLike(chat)"
       >
         <span
-          :class="
-            randomColor(chat.profile.id).isDark
-              ? 'text-zinc-50'
-              : 'text-zinc-900'
-          "
+          :class="randomColor(chat).isDark ? 'text-zinc-50' : 'text-zinc-900'"
         >
           {{ chat.text }}
+          <like-icon
+            v-if="chat?.likes"
+            :total="chat?.likes?.length"
+            :position="chatIsUser ? 'bottom-left' : 'bottom-right'"
+            @heartClick="addOrRemoveLike(chat)"
+          />
         </span>
       </div>
     </div>
