@@ -1,7 +1,7 @@
 <script setup>
 import DefaultButton from '../DefaultButton.vue';
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
-import { postChat } from '@/services/supabase';
+import { postChat, supabase } from '@/services/supabase';
 import ChatBubble from './ChatBubble.vue';
 
 defineProps({
@@ -28,6 +28,10 @@ const resizeCallback = () => {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
   chatBox.value.scrollTop = chatBox.value.scrollHeight;
+};
+
+const chatIsUser = (id) => {
+  return id === supabase.auth.user().id;
 };
 
 onMounted(() => {
@@ -59,6 +63,7 @@ onUnmounted(() => {
           :chat="chat"
           :key="chat.id"
           :index="index"
+          :chatIsUser="chatIsUser(chat.profile.id)"
           class="text-xs"
         />
       </div>
