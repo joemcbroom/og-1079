@@ -4,12 +4,14 @@ import { useUserStore } from '../stores/user';
 import ProfileImage from '@/assets/profile-user.png';
 import { ref, watch } from 'vue';
 import DefaultButton from '@/components/DefaultButton.vue';
+import SpinnerIcon from './SpinnerIcon.vue';
 
 const { supabase, signOut } = useAuthStore();
 const userStore = useUserStore();
 
 const showOptions = ref(false);
 const imageSrc = ref(ProfileImage);
+const imageIsLoading = ref(true);
 
 defineProps({
   includeOptions: {
@@ -18,25 +20,47 @@ defineProps({
   },
 });
 
-watch(
-  () => userStore.user.avatar_url,
-  (newValue) => {
-    imageSrc.value = userStore.profileImagePublicURL || ProfileImage;
-  },
-  { immediate: true }
-);
+const loadImage = async (src) => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.addEventListener('load', () => {
+      resolve(image);
+    });
+    image.addEventListener('error', reject);
+    image.src = src;
+  });
+};
 
 const toggleShowOptions = () => {
   showOptions.value = !showOptions.value;
 };
+
+watch(
+  () => userStore.user.avatar_url,
+  async (newValue) => {
+    imageIsLoading.value = true;
+    const publicUrl = userStore.profileImagePublicURL;
+    try {
+      await loadImage(publicUrl);
+      imageSrc.value = publicUrl;
+    } catch (error) {
+      imageSrc.value = ProfileImage;
+    } finally {
+      imageIsLoading.value = false;
+    }
+  },
+  { immediate: true }
+);
 </script>
 <template>
   <div class="w-1/2 grid place-items-center relative">
+    <SpinnerIcon v-if="imageIsLoading" />
     <span
       class="overflow-hidden w-full rounded-full border border-zinc-500 aspect-square grid place-items-center bg-cover bg-center bg-no-repeat"
       :class="{ 'cursor-pointer': includeOptions }"
       :style="`background-image: url(${imageSrc})`"
       @click="toggleShowOptions"
+      v-else
     />
 
     <div
