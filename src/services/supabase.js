@@ -29,6 +29,21 @@ const getChats = async () => {
   }
 };
 
+const makeUserAdmin = async (id) => {
+  try {
+    const updates = {
+      id,
+      isAdmin: true,
+      updated_at: new Date(),
+    };
+
+    let { error } = await supabase.from('profiles').upsert(updates);
+    if (error) throw error;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const addLikeToChat = async ({ likes, id, userId }) => {
   const newLikes = likes !== null ? [...likes, userId] : [userId];
   try {
@@ -71,9 +86,22 @@ const getUserProfile = async (id) => {
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, username, avatar_url')
+      .select('*')
       .eq('id', id)
       .single();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getAllUsers = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .order('updated_at', { ascending: false });
     if (error) throw error;
     return data;
   } catch (error) {
@@ -103,4 +131,6 @@ export {
   addLikeToChat,
   removeLikeFromChat,
   addOrRemoveLike,
+  getAllUsers,
+  makeUserAdmin,
 };

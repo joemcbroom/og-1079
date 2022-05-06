@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { getPublicUrl } from '@/utils/publicUrl.js';
+import { getUserProfile } from '@/services/supabase.js';
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -17,12 +18,7 @@ export const useUserStore = defineStore('user', {
     async setUser(supabase) {
       const { id } = supabase.auth.user();
       try {
-        const { data, error, status } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', id)
-          .single();
-        if (error & (status !== 406)) throw error;
+        const data = await getUserProfile(id);
         if (data) {
           this.user = data;
         }

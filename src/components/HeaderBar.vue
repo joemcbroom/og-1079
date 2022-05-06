@@ -2,7 +2,9 @@
 import { RouterLink } from 'vue-router';
 import ProfileIcon from './ProfileIcon.vue';
 import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 const authStore = useAuthStore();
+const userStore = useUserStore();
 </script>
 <template>
   <header
@@ -15,6 +17,12 @@ const authStore = useAuthStore();
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/events">Events</RouterLink>
       <RouterLink v-if="authStore.isAuthenticated" to="/chat">Chat</RouterLink>
+      <RouterLink
+        v-if="authStore.isAuthenticated && userStore.user.isAdmin"
+        to="/admin"
+      >
+        Admin
+      </RouterLink>
     </div>
     <div class="w-24 grid place-items-center">
       <ProfileIcon :includeOptions="true" />

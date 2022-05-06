@@ -64,7 +64,7 @@ watch(
     />
 
     <div
-      class="flex flex-col min-w-max border shadow-lg rounded absolute top-full right-0 bg-zinc-100 mt-2 py-5 px-10 z-20"
+      class="flex flex-col gap-4 min-w-max border shadow-lg rounded absolute top-full right-0 bg-zinc-100 mt-2 py-5 px-10 z-20"
       v-show="includeOptions && showOptions"
     >
       <DefaultButton @click="toggleShowOptions" v-if="!supabase.auth.user()">
