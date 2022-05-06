@@ -37,7 +37,7 @@ const toggleShowOptions = () => {
 
 watch(
   () => userStore.user.avatar_url,
-  async (newValue) => {
+  async () => {
     imageIsLoading.value = true;
     const publicUrl = userStore.profileImagePublicURL;
     try {

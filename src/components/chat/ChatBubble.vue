@@ -1,6 +1,6 @@
 <script setup>
 import ProfileImage from '@/assets/profile-user.png';
-import { supabase, addOrRemoveLike } from '@/services/supabase';
+import { addOrRemoveLike } from '@/services/supabase';
 import { useChatUsersStore } from '@/stores/chatUsers';
 import Color from 'color';
 import gsap from 'gsap';

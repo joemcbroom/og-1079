@@ -12,7 +12,7 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(['heartClick']);
+defineEmits(['heartClick']);
 
 const heartPosition = computed(() => {
   switch (props.position) {
