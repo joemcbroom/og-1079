@@ -119,6 +119,7 @@ const handleLike = async (chat) => {
         @dblclick="handleLike(chat)"
       >
         <span
+          class="overflow-hidden text-ellipsis cursor-pointer hover:overflow-visible"
           :class="randomColor(chat).isDark ? 'text-zinc-50' : 'text-zinc-900'"
         >
           <chat-text :text="chat.text" :chatIsUser="chatIsUser" />

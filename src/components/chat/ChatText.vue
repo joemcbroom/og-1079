@@ -18,22 +18,6 @@ const hasGif = (text) => {
 
 const gifs = ref([]);
 
-// watch(
-//   () => props.text,
-//   (text) => {
-//     if (hasGif(text)) {
-//       const gifHrefs = text
-//         .split(' ')
-//         .filter((str) => str)
-//         .map((str) => str.trim());
-
-//       gifs.value = gifHrefs;
-//       debugger;
-//     }
-//   },
-//   { immediate: true }
-// );
-
 onMounted(() => {
   if (hasGif(props.text)) {
     const gifHrefs = props.text
@@ -60,7 +44,7 @@ const gifHrefs = computed(() => {
   <span
     v-if="gifHrefs?.length"
     class="flex"
-    :class="!chatIsUser ? 'justify-end' : 'justify-start'"
+    :class="chatIsUser ? 'justify-end' : 'justify-start'"
   >
     <img
       v-for="gif in gifHrefs"
@@ -70,7 +54,7 @@ const gifHrefs = computed(() => {
       class="w-10/12 py-1"
     />
   </span>
-  <span v-else>
+  <span class="text-ellipsis" v-else>
     {{ text }}
   </span>
 </template>
