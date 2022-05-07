@@ -5,48 +5,39 @@ import { ref } from 'vue';
 import DefaultButton from './DefaultButton.vue';
 import StyledInput from './StyledInput.vue';
 import AvatarUpload from './AvatarUpload.vue';
+import { updateProfile } from '@/services/supabase';
+import ColorPicker from './ColorPicker.vue';
+
 const loading = ref(false);
+const showColorPicker = ref(false);
+
 const { supabase, signOut } = useAuthStore();
 
 const userStore = useUserStore();
 
-const updateProfile = async () => {
-  try {
-    loading.value = true;
-    const { id } = supabase.auth.user();
-    const updates = {
-      id,
-      ...userStore.user,
-      updated_at: new Date(),
-    };
-
-    let { error } = await supabase.from('profiles').upsert(updates);
-    if (error) throw error;
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
+const handleUpdateProfile = async () => {
+  const id = supabase.auth.user().id;
+  const user = userStore.user;
+  loading.value = true;
+  await updateProfile({ ...user, id });
+  loading.value = false;
 };
 
-const updateAvatar = async (avatar_url) => {
-  try {
-    loading.value = true;
-    const { id } = supabase.auth.user();
-    const updates = {
-      id,
-      avatar_url,
-      updated_at: new Date(),
-    };
+const handleUpdateAvatar = async (avatar_url) => {
+  const { id } = supabase.auth.user();
+  loading.value = true;
+  await updateProfile({ id, avatar_url });
+  userStore.user.avatar_url = avatar_url;
+  loading.value = false;
+};
 
-    let { error } = await supabase.from('profiles').upsert(updates);
-    userStore.user.avatar_url = avatar_url;
-    if (error) throw error;
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
+const handleUpdateUserColor = async (color) => {
+  const { id } = supabase.auth.user();
+  showColorPicker.value = false;
+  loading.value = true;
+  await updateProfile({ id, color });
+  userStore.user.color = color;
+  loading.value = false;
 };
 </script>
 <template>
@@ -56,7 +47,23 @@ const updateAvatar = async (avatar_url) => {
     class="flex flex-col justify-center items-start gap-5 border p-6 w-full mt-4"
     @submit.prevent
   >
-    <avatar-upload class="self-center" @upload="updateAvatar" />
+    <avatar-upload class="self-center" @upload="handleUpdateAvatar" />
+    <color-picker
+      v-if="showColorPicker"
+      :userColor="userStore.userColor"
+      @updateColor="handleUpdateUserColor"
+    />
+    <div
+      class="flex items-center justify-center w-full gap-2 text-xs relative"
+      v-else
+    >
+      Your Color:
+      <span
+        class="w-8 h-8 aspect-square relative rounded overflow-hidden"
+        :style="{ background: userStore.userColor }"
+        @click="showColorPicker = true"
+      />
+    </div>
     <styled-input
       label="Email"
       id="email"
@@ -82,7 +89,7 @@ const updateAvatar = async (avatar_url) => {
     </label>
 
     <div class="w-full flex gap-1">
-      <default-button class="w-full" @click="updateProfile">
+      <default-button class="w-full" @click="handleUpdateProfile">
         Update Profile
       </default-button>
       <default-button class="w-full" @click="signOut">

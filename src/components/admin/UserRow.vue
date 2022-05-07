@@ -1,6 +1,6 @@
 <script setup>
 import { getPublicUrl } from '@/utils/publicUrl';
-import { makeUserAdmin } from '@/services/supabase';
+import { updateProfile } from '@/services/supabase';
 import ProfileImage from '@/assets/profile-user.png';
 import AddIcon from '@/assets/add.png';
 import MinusIcon from '@/assets/minus.png';
@@ -26,7 +26,8 @@ const toggleSwitchSrc = computed(() => {
 });
 
 const handleMakeAdmin = async () => {
-  await makeUserAdmin(props.user.id);
+  const id = props.user.id;
+  await updateProfile({ id, isAdmin: true });
   emit('updateUser', { ...props.user, isAdmin: true });
 };
 </script>

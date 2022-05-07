@@ -33,5 +33,8 @@ export const useUserStore = defineStore('user', {
       const { avatar_url } = this.user;
       return getPublicUrl(avatar_url);
     },
+    userColor() {
+      if (this.user.color) return this.user.color;
+    },
   },
 });
