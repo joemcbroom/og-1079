@@ -48,7 +48,7 @@ export const useUserStore = defineStore('user', {
     },
     userColor() {
       if (this.user.color) return this.user.color;
-      return `#${intToRGB(hashCode(supabase.auth.user().email))}`;
+      return `#${intToRGB(hashCode(supabase.auth.user().id))}`;
     },
   },
 });
