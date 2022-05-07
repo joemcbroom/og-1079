@@ -96,7 +96,7 @@ const handleLike = async (chat) => {
   >
     <div class="grid grid-cols-5 select-none">
       <div
-        class="flex flex-col justify-center items-center col-span-1"
+        class="flex flex-col justify-end items-center col-span-1"
         :class="chatIsUser ? 'order-last' : 'order-first'"
       >
         <img
