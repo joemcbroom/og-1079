@@ -1,6 +1,19 @@
 import { defineStore } from 'pinia';
 import { getPublicUrl } from '@/utils/publicUrl.js';
-import { getUserProfile } from '@/services/supabase.js';
+import { getUserProfile, supabase } from '@/services/supabase.js';
+
+function hashCode(str) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+function intToRGB(i) {
+  var c = (i & 0x00ffffff).toString(16).toUpperCase();
+  return '00000'.substring(0, 6 - c.length) + c;
+}
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -35,6 +48,7 @@ export const useUserStore = defineStore('user', {
     },
     userColor() {
       if (this.user.color) return this.user.color;
+      return `#${intToRGB(hashCode(supabase.auth.user().email))}`;
     },
   },
 });
