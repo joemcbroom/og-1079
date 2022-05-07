@@ -59,7 +59,7 @@ const handleUpdateUserColor = async (color) => {
     >
       Your Color:
       <span
-        class="w-8 h-8 aspect-square relative rounded overflow-hidden"
+        class="w-8 h-8 aspect-square relative rounded overflow-hidden border border-zinc-50"
         :style="{ background: userStore.userColor }"
         @click="showColorPicker = true"
       />
