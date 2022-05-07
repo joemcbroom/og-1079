@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', {
         avatar_url: '',
         phone: '',
         isAdmin: false,
+        color: '',
       },
     };
   },
@@ -31,6 +32,9 @@ export const useUserStore = defineStore('user', {
     profileImagePublicURL() {
       const { avatar_url } = this.user;
       return getPublicUrl(avatar_url);
+    },
+    userColor() {
+      if (this.user.color) return this.user.color;
     },
   },
 });

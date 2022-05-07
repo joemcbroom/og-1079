@@ -12,6 +12,25 @@ const chatSubscription = ref(null);
 const chatUserStore = useChatUsersStore();
 const { chatUsers } = storeToRefs(chatUserStore);
 
+function hashCode(str) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+function intToRGB(i) {
+  var c = (i & 0x00ffffff).toString(16).toUpperCase();
+  return '00000'.substring(0, 6 - c.length) + c;
+}
+
+const randomColor = (chat) => {
+  const id = chat.profile.id;
+  const hex = `#${intToRGB(hashCode(id))}`;
+  return hex;
+};
+
 onMounted(async () => {
   let data = await getChats();
   chatUsers.value = data.reduce((users, chat) => {
@@ -19,7 +38,11 @@ onMounted(async () => {
     if (!users.find((user) => user?.id === profile.id)) {
       return [
         ...users,
-        { ...profile, public_avatar_url: getPublicUrl(profile.avatar_url) },
+        {
+          ...profile,
+          public_avatar_url: getPublicUrl(profile.avatar_url),
+          color: profile.color || randomColor(chat),
+        },
       ];
     }
     return users;

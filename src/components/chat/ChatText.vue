@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({
   text: {
@@ -37,6 +37,7 @@ const gifHrefs = computed(() => {
       .map((str) => str.trim());
     return hrefs;
   }
+  return [];
 });
 </script>
 

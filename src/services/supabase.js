@@ -16,7 +16,8 @@ const getChats = async () => {
         profile (
             id,
             username,
-            avatar_url
+            avatar_url,
+            color
         )
       `
       )
@@ -24,21 +25,6 @@ const getChats = async () => {
 
     if (error) throw error;
     return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const makeUserAdmin = async (id) => {
-  try {
-    const updates = {
-      id,
-      isAdmin: true,
-      updated_at: new Date(),
-    };
-
-    let { error } = await supabase.from('profiles').upsert(updates);
-    if (error) throw error;
   } catch (error) {
     console.error(error);
   }
@@ -123,6 +109,20 @@ const postChat = async (text) => {
   }
 };
 
+const updateProfile = async (params) => {
+  try {
+    const updates = {
+      ...params,
+      updated_at: new Date(),
+    };
+
+    let { error } = await supabase.from('profiles').upsert(updates);
+    if (error) throw error;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export {
   supabase,
   getChats,
@@ -132,5 +132,5 @@ export {
   removeLikeFromChat,
   addOrRemoveLike,
   getAllUsers,
-  makeUserAdmin,
+  updateProfile,
 };
