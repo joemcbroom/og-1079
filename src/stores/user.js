@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', {
         avatar_url: '',
         phone: '',
         isAdmin: false,
+        color: '',
       },
     };
   },

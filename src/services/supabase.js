@@ -16,7 +16,8 @@ const getChats = async () => {
         profile (
             id,
             username,
-            avatar_url
+            avatar_url,
+            color
         )
       `
       )
@@ -104,6 +105,16 @@ const getAllUsers = async () => {
       .order('updated_at', { ascending: false });
     if (error) throw error;
     return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const updateUserColor = async (color) => {
+  const { id } = supabase.auth.user();
+  try {
+    let { error } = await supabase.from('profiles').update({ color }).eq(id);
+    if (error) throw error;
   } catch (error) {
     console.error(error);
   }

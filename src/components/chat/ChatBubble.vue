@@ -7,6 +7,7 @@ import gsap from 'gsap';
 import LikeIcon from '@/components/chat/LikeIcon.vue';
 import ChatText from '@/components/chat/ChatText.vue';
 import { ref } from 'vue';
+import { computed } from '@vue/reactivity';
 
 const chatUserStore = useChatUsersStore();
 const { chatUser } = chatUserStore;
@@ -33,29 +34,11 @@ const getAvatar = (chat) => {
   return src || ProfileImage;
 };
 
-function hashCode(str) {
-  // java String#hashCode
-  var hash = 0;
-  for (var i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return hash;
-}
+const chatUserData = computed(() => chatUser(props.chat.profile.id));
 
-function intToRGB(i) {
-  var c = (i & 0x00ffffff).toString(16).toUpperCase();
-
-  return '00000'.substring(0, 6 - c.length) + c;
-}
-
-const randomColor = (chat) => {
-  const id = chat.profile.id;
-  const hex = `#${intToRGB(hashCode(id))}`;
+const colorIsDark = (hex) => {
   const color = Color(hex);
-  return {
-    hex,
-    isDark: color.isDark(),
-  };
+  return color.isDark();
 };
 
 function onBeforeEnter(el) {
@@ -115,12 +98,14 @@ const handleLike = async (chat) => {
             ? 'origin-right ml-auto rounded-br-none justify-end pr-2 text-right'
             : 'origin-left mr-auto rounded-bl-none justify-start pl-2 text-left'
         "
-        :style="{ backgroundColor: randomColor(chat).hex }"
+        :style="{ backgroundColor: chatUserData.color }"
         @dblclick="handleLike(chat)"
       >
         <span
           class="overflow-hidden text-ellipsis cursor-pointer hover:overflow-visible"
-          :class="randomColor(chat).isDark ? 'text-zinc-50' : 'text-zinc-900'"
+          :class="
+            colorIsDark(chatUserData.color) ? 'text-zinc-50' : 'text-zinc-900'
+          "
         >
           <chat-text :text="chat.text" :chatIsUser="chatIsUser" />
           <like-icon
