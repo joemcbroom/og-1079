@@ -4,7 +4,9 @@ import { addOrRemoveLike } from '@/services/supabase';
 import { useChatUsersStore } from '@/stores/chatUsers';
 import Color from 'color';
 import gsap from 'gsap';
-import LikeIcon from './LikeIcon.vue';
+import LikeIcon from '@/components/chat/LikeIcon.vue';
+import ChatText from '@/components/chat/ChatText.vue';
+import { ref } from 'vue';
 
 const chatUserStore = useChatUsersStore();
 const { chatUser } = chatUserStore;
@@ -75,6 +77,14 @@ function onEnter(el, done) {
     onComplete: done,
   });
 }
+
+const bubble = ref(null);
+
+const handleLike = async (chat) => {
+  bubble.value.style.pointerEvents = 'none';
+  await addOrRemoveLike(chat);
+  bubble.value.style.pointerEvents = 'auto';
+};
 </script>
 
 <template>
@@ -84,7 +94,7 @@ function onEnter(el, done) {
     @enter="onEnter"
     appear
   >
-    <div class="grid grid-cols-5">
+    <div class="grid grid-cols-5 select-none">
       <div
         class="flex flex-col justify-center items-center col-span-1"
         :class="chatIsUser ? 'order-last' : 'order-first'"
@@ -98,19 +108,20 @@ function onEnter(el, done) {
         </span>
       </div>
       <div
-        class="text col-span-4 flex justify-start items-center border w-10/12 my-1 text-sm pl-4 rounded-lg"
+        ref="bubble"
+        class="text col-span-4 flex items-center border w-10/12 my-1 text-sm py-1 rounded-lg"
         :class="
           chatIsUser
-            ? 'origin-right ml-auto rounded-br-none'
-            : 'origin-left mr-auto rounded-bl-none'
+            ? 'origin-right ml-auto rounded-br-none justify-end pr-2 text-right'
+            : 'origin-left mr-auto rounded-bl-none justify-start pl-2 text-left'
         "
         :style="{ backgroundColor: randomColor(chat).hex }"
-        @dblclick="addOrRemoveLike(chat)"
+        @dblclick="handleLike(chat)"
       >
         <span
           :class="randomColor(chat).isDark ? 'text-zinc-50' : 'text-zinc-900'"
         >
-          {{ chat.text }}
+          <chat-text :text="chat.text" :chatIsUser="chatIsUser" />
           <like-icon
             v-if="chat?.likes"
             :total="chat?.likes?.length"

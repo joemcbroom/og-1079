@@ -31,7 +31,7 @@ const heartPosition = computed(() => {
 </script>
 <template>
   <transition
-    enter-active-class="duration-300 ease-in-out delay-100"
+    enter-active-class="duration-300 ease-in-out"
     enter-from-class="transform scale-0 opacity-0"
     enter-to-class="scale-100 opacity-100"
     leave-active-class="duration-300 ease-in-out"
@@ -40,7 +40,7 @@ const heartPosition = computed(() => {
     appear
   >
     <div
-      class="select-none absolute text-[9px] bg-ogGreen bg-opacity-75 rounded-full px-2 text-zinc-50 font-bold grid place-items-center"
+      class="select-none absolute text-[9px] bg-ogGreen bg-opacity-90 rounded-full px-2 text-zinc-50 font-bold grid place-items-center min-w-max"
       :class="heartPosition"
       @click="$emit('heartClick')"
     >
