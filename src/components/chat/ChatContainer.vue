@@ -1,5 +1,5 @@
 <script setup>
-import DefaultButton from '../DefaultButton.vue';
+import ChatInput from '@/components/chat/ChatInput.vue';
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
 import { postChat, supabase } from '@/services/supabase';
 import ChatBubble from './ChatBubble.vue';
@@ -11,17 +11,14 @@ defineProps({
   },
 });
 
-const input = ref('');
 const chatBox = ref(null);
 
-const submitChat = async () => {
-  const chat = input.value;
+const postChatToDb = async (chat) => {
   if (!chat) {
     return;
   }
   await postChat(chat);
   chatBox.value.scrollTop = chatBox.value.scrollHeight;
-  input.value = '';
 };
 
 const resizeCallback = () => {
@@ -68,17 +65,7 @@ onUnmounted(() => {
         />
       </div>
     </div>
-    <form @submit.prevent="submitChat" class="flex sticky bottom-0 w-full h-14">
-      <input
-        v-model="input"
-        type="text"
-        class="w-3/4 text-zinc-800 pl-2 rounded rounded-r-none"
-        placeholder="Chat..."
-      />
-      <DefaultButton type="submit" class="w-1/4 rounded-l-none"
-        >Send</DefaultButton
-      >
-    </form>
+    <chat-input @submitChat="postChatToDb" />
   </div>
 </template>
 
