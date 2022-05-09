@@ -4,18 +4,31 @@ import { searchGifs } from '@/services/gifs';
 
 const emit = defineEmits(['selectGif']);
 
+const props = defineProps({
+  query: {
+    type: String,
+    default: null,
+  },
+});
+
 const modal = ref(null);
-const searchTerm = ref('');
+const searchTerm = ref(props.query);
 const gifs = ref([]);
 const awaitingSearch = ref(false);
 
 const nextPage = ref(1);
 
 const openModal = () => {
+  if (props.query) {
+    searchTerm.value = props.query;
+    handleSearchGifs();
+  }
   modal.value.showModal();
 };
 
 const closeModal = () => {
+  searchTerm.value = '';
+  gifs.value = [];
   modal.value.close();
 };
 
@@ -42,8 +55,6 @@ const handleSearchGifs = async () => {
 
 const handleSelectGif = (gif) => {
   emit('selectGif', gif);
-  searchTerm.value = '';
-  gifs.value = [];
   closeModal();
 };
 
