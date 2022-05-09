@@ -21,21 +21,21 @@ const postChatToDb = async (chat) => {
   chatBox.value.scrollTop = chatBox.value.scrollHeight;
 };
 
-const resizeCallback = () => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  chatBox.value.scrollTop = chatBox.value.scrollHeight;
-};
+// const resizeCallback = () => {
+//   let vh = window.innerHeight * 0.01;
+//   document.documentElement.style.setProperty('--vh', `${vh}px`);
+//   chatBox.value.scrollTop = chatBox.value.scrollHeight;
+// };
 
 const chatIsUser = (id) => {
   return id === supabase.auth.user().id;
 };
 
-onMounted(() => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  window.addEventListener('resize', resizeCallback);
-});
+// onMounted(() => {
+//   let vh = window.innerHeight * 0.01;
+//   document.documentElement.style.setProperty('--vh', `${vh}px`);
+//   window.addEventListener('resize', resizeCallback);
+// });
 
 onUpdated(() => {
   setTimeout(() => {
@@ -43,9 +43,9 @@ onUpdated(() => {
   }, 800);
 });
 
-onUnmounted(() => {
-  window.removeEventListener('resize', resizeCallback);
-});
+// onUnmounted(() => {
+//   window.removeEventListener('resize', resizeCallback);
+// });
 </script>
 
 <template>
@@ -63,6 +63,7 @@ onUnmounted(() => {
           :chatIsUser="chatIsUser(chat.profile.id)"
           class="text-xs"
         />
+        <div v-if="chats.length === 0">No Chats Yet!</div>
       </div>
     </div>
     <chat-input @submitChat="postChatToDb" />
