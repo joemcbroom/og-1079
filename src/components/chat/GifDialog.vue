@@ -42,6 +42,8 @@ const handleSearchGifs = async () => {
 
 const handleSelectGif = (gif) => {
   emit('selectGif', gif);
+  searchTerm.value = '';
+  gifs.value = [];
   closeModal();
 };
 
