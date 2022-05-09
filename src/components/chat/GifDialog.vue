@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { searchGifs } from '@/services/gifs';
 
+const emit = defineEmits(['selectGif']);
+
 const modal = ref(null);
 const searchTerm = ref('');
 const gifs = ref([]);
@@ -38,6 +40,11 @@ const handleSearchGifs = async () => {
   awaitingSearch.value = true;
 };
 
+const handleSelectGif = (gif) => {
+  emit('selectGif', gif);
+  closeModal();
+};
+
 const loadMoreGifs = async () => {
   const { results, next } = await searchGifs({
     query: searchTerm.value,
@@ -54,11 +61,14 @@ const loadMoreGifs = async () => {
   >
     GIF
   </span>
-  <dialog ref="modal" class="p-0 pb-4">
+  <dialog
+    ref="modal"
+    class="p-0 pb-4 border border-zinc-800 rounded shadow backdrop-blur-lg bg-zinc-50/50"
+  >
     <div class="flex flex-col justify-center items-center gap-4">
       <input
         type="text"
-        class="w-full text-zinc-800 px-2 outline-none border"
+        class="w-full text-lg text-zinc-50 bg-zinc-600 px-2 outline-none"
         placeholder="Search..."
         v-model="searchTerm"
         @input="handleSearchGifs"
@@ -70,22 +80,31 @@ const loadMoreGifs = async () => {
           class="px-4 flex flex-wrap"
           v-if="gifs.length > 0"
         >
+          <div
+            class="text-sm text-center text-ogGreen bg-zinc-50 rounded rounded-b-none w-full"
+            :key="'helptext'"
+          >
+            Select a Gif ✔
+          </div>
           <img
             v-for="gif in gifs"
             :src="gif.media[0].tinygif.url"
             :key="gif.id"
             class="w-1/3 aspect-square"
+            @click="handleSelectGif(gif)"
           />
 
           <div
-            class="text-sm text-center text-ogGreen underline cursor-pointer"
+            class="text-sm text-center text-ogGreen underline cursor-pointer bg-zinc-50 rounded rounded-t-none w-full"
             @click="loadMoreGifs"
             :key="'loadMore'"
           >
             Load more...
           </div>
         </transition-group>
-        <div class="text-2xl" v-else>Search for Gifs!</div>
+        <div class="text-zinc-50 text-shadow-md" v-else>
+          Enter a search term to get GIFs
+        </div>
       </div>
       <button
         class="bg-ogGreen px-2 py-1 text-zinc-50 rounded"
@@ -100,6 +119,10 @@ const loadMoreGifs = async () => {
 <style scoped>
 #gif-container {
   width: 16rem;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .fade-move,

@@ -11,6 +11,12 @@ const handleSubmit = () => {
   emit('submitChat', input.value);
   input.value = '';
 };
+
+const handleSelectGif = (gif) => {
+  const gifUrl = gif.media[0].gif.url;
+  input.value = gifUrl;
+  showGifSearch.value = false;
+};
 </script>
 <template>
   <form @submit.prevent="handleSubmit" class="flex sticky bottom-0 w-full h-14">
@@ -23,6 +29,6 @@ const handleSubmit = () => {
     <DefaultButton type="submit" class="w-1/4 rounded-l-none">
       Send
     </DefaultButton>
-    <gif-dialog />
+    <gif-dialog @selectGif="handleSelectGif" />
   </form>
 </template>
