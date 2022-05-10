@@ -51,12 +51,12 @@ onUpdated(() => {
 <template>
   <div
     id="chat-wrap"
-    class="flex flex-col justify-center items-stretch w-full relative"
+    class="flex flex-col justify-center items-stretch w-full relative overflow-hidden rounded"
   >
-    <div class="w-full h-full mt-8 pb-0">
+    <div class="w-full h-full mt-8 pb-6">
       <div
         ref="chatBox"
-        class="h-full bg-zinc-50 rounded rounded-b-none border text-zinc-800 overflow-scroll flex flex-col py-6 gap-4 scroll-smooth"
+        class="h-full bg-zinc-50 rounded border text-zinc-800 overflow-scroll flex flex-col py-6 gap-4 scroll-smooth"
       >
         <ChatBubble
           v-for="(chat, index) in chats"
