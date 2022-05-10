@@ -70,7 +70,7 @@ const loadMoreGifs = async () => {
 <template>
   <span
     @click="openModal"
-    class="absolute right-1/4 top-3.5 px-2 mr-1 rounded bg-zinc-400 cursor-pointer"
+    class="absolute right-1/4 top-1/4 px-2 mr-1 rounded bg-zinc-400 cursor-pointer"
   >
     GIF
   </span>

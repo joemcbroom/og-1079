@@ -49,8 +49,11 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div id="chat-wrap" class="flex flex-col justify-center items-stretch w-full">
-    <div class="w-full h-full py-10 px-6">
+  <div
+    id="chat-wrap"
+    class="flex flex-col justify-center items-stretch w-full relative"
+  >
+    <div class="w-full h-full pt-10 pb-16 px-6">
       <div
         ref="chatBox"
         class="h-full bg-zinc-50 rounded border text-zinc-800 overflow-scroll flex flex-col py-4 gap-4 scroll-smooth"

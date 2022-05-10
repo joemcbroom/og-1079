@@ -17,7 +17,7 @@ const handleSelectGif = (gif) => {
 };
 </script>
 <template>
-  <form @submit.prevent class="flex sticky bottom-0 w-full h-14">
+  <form @submit.prevent class="flex absolute bottom-0 w-full h-12 mx-auto">
     <input
       type="text"
       class="w-3/4 text-zinc-800 pl-2 rounded rounded-r-none pr-12"
