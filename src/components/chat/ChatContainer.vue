@@ -53,7 +53,7 @@ onUpdated(() => {
     id="chat-wrap"
     class="flex flex-col justify-center items-stretch w-full relative"
   >
-    <div class="w-full h-full pt-14 pb-16">
+    <div class="w-full h-full pt-14 pb-6">
       <div
         ref="chatBox"
         class="h-full bg-zinc-50 rounded rounded-b-none border text-zinc-800 overflow-scroll flex flex-col py-6 gap-4 scroll-smooth"

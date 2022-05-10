@@ -19,7 +19,7 @@ const handleSelectGif = (gif) => {
 <template>
   <form
     @submit.prevent
-    class="flex absolute bottom-6 w-full h-12 mx-auto border-t border-zinc-800"
+    class="flex sticky bottom-6 w-full h-12 mx-auto border-t border-zinc-800"
   >
     <input
       type="text"
