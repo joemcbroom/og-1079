@@ -17,10 +17,13 @@ const handleSelectGif = (gif) => {
 };
 </script>
 <template>
-  <form @submit.prevent class="flex absolute bottom-0 w-full h-12 mx-auto">
+  <form
+    @submit.prevent
+    class="flex absolute bottom-6 w-full h-12 mx-auto border-t border-zinc-800"
+  >
     <input
       type="text"
-      class="w-1/2 text-zinc-800 bg-zinc-50 pl-2 rounded rounded-r-none outline-none"
+      class="w-1/2 text-zinc-800 bg-zinc-50 pl-2 rounded rounded-r-none rounded-t-none outline-none"
       placeholder="Chat..."
       v-model="input"
     />
@@ -28,7 +31,7 @@ const handleSelectGif = (gif) => {
     <DefaultButton
       @click="handleSubmit"
       type="submit"
-      class="w-1/3 rounded-l-none"
+      class="w-1/3 rounded-l-none rounded-t-none"
     >
       Send
     </DefaultButton>

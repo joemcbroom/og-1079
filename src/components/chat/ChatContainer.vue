@@ -53,10 +53,10 @@ onUpdated(() => {
     id="chat-wrap"
     class="flex flex-col justify-center items-stretch w-full relative"
   >
-    <div class="w-full h-full pt-10 pb-16 px-6">
+    <div class="w-full h-full pt-10 pb-16">
       <div
         ref="chatBox"
-        class="h-full bg-zinc-50 rounded border text-zinc-800 overflow-scroll flex flex-col py-4 gap-4 scroll-smooth"
+        class="h-full bg-zinc-50 rounded rounded-b-none border text-zinc-800 overflow-scroll flex flex-col py-6 gap-4 scroll-smooth"
       >
         <ChatBubble
           v-for="(chat, index) in chats"
