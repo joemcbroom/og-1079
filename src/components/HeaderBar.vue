@@ -8,7 +8,7 @@ const userStore = useUserStore();
 </script>
 <template>
   <header
-    class="flex w-full justify-between p-4 border-0 border-b sticky top-0 bg-zinc-100 text-zinc-800 z-10"
+    class="flex w-full justify-between p-4 border-0 border-b absolute top-0 bg-zinc-100 text-zinc-800 z-10"
   >
     <div class="w-24 grid place-items-center">
       <img class="" src="../assets/logo.png" alt="logo" />
