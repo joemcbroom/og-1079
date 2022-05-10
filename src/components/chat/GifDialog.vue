@@ -70,9 +70,9 @@ const loadMoreGifs = async () => {
 <template>
   <span
     @click="openModal"
-    class="absolute right-1/4 top-1/4 px-2 mr-1 rounded bg-zinc-400 cursor-pointer"
+    class="w-2/12 px-2 cursor-pointer bg-zinc-50 grid place-items-center"
   >
-    GIF
+    <span class="bg-zinc-500 text-zinc-50 px-2 rounded">GIF</span>
   </span>
   <dialog
     ref="modal"
