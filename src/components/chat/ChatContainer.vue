@@ -21,31 +21,15 @@ const postChatToDb = async (chat) => {
   chatBox.value.scrollTop = chatBox.value.scrollHeight;
 };
 
-// const resizeCallback = () => {
-//   let vh = window.innerHeight * 0.01;
-//   document.documentElement.style.setProperty('--vh', `${vh}px`);
-//   chatBox.value.scrollTop = chatBox.value.scrollHeight;
-// };
-
 const chatIsUser = (id) => {
   return id === supabase.auth.user().id;
 };
-
-// onMounted(() => {
-//   let vh = window.innerHeight * 0.01;
-//   document.documentElement.style.setProperty('--vh', `${vh}px`);
-//   window.addEventListener('resize', resizeCallback);
-// });
 
 onUpdated(() => {
   setTimeout(() => {
     chatBox.value.scrollTop = chatBox.value.scrollHeight;
   }, 800);
 });
-
-// onUnmounted(() => {
-//   window.removeEventListener('resize', resizeCallback);
-// });
 </script>
 
 <template>
@@ -53,7 +37,7 @@ onUpdated(() => {
     id="chat-wrap"
     class="flex flex-col justify-center items-stretch w-full relative overflow-hidden rounded rounded-b-none"
   >
-    <div class="w-full h-full mt-8 pb-6">
+    <div class="w-full h-full mt-8 pb-14">
       <div
         ref="chatBox"
         class="h-full bg-zinc-50 rounded rounded-b-none border text-zinc-800 overflow-scroll flex flex-col py-6 gap-4 scroll-smooth"
