@@ -1,6 +1,6 @@
 <script setup>
 import ChatInput from '@/components/chat/ChatInput.vue';
-import { onMounted, onUnmounted, onUpdated, ref } from 'vue';
+import { onUpdated, ref } from 'vue';
 import { postChat, supabase } from '@/services/supabase';
 import ChatBubble from './ChatBubble.vue';
 

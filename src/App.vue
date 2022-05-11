@@ -1,6 +1,14 @@
 <script setup>
 import { RouterView } from 'vue-router';
 import HeaderBar from '@/components/HeaderBar.vue';
+import isMobile from './utils/isMobile';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  if (isMobile()) {
+    document.querySelector('#app').classList.add('mobile');
+  }
+});
 </script>
 
 <template>
@@ -48,5 +56,10 @@ main {
 .slide-right-leave-to {
   transform: translateX(100%);
   opacity: 1;
+}
+
+#app.mobile {
+  min-height: calc(100vh - 81px);
+  min-height: -webkit-fill-available;
 }
 </style>

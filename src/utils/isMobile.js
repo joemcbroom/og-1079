@@ -1,3 +1,4 @@
+/* eslint-disable */
 const isMobile = () => {
   let check = false;
   (function (a) {
